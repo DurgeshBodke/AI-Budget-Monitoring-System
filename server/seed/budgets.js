@@ -41,7 +41,7 @@ const importBudgets = async () => {
 
             financialYear: item.FinancialYear,
 
-            allocationType: "Annual",
+            allocationType: item.AllocationType || "Annual",
 
             quarter: null,
 

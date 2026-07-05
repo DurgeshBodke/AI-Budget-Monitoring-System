@@ -1,0 +1,529 @@
+<mat-toolbar color="primary" class="topbar">
+
+    <button
+        mat-icon-button
+        routerLink="/dashboard">
+
+        <mat-icon>
+
+            arrow_back
+
+        </mat-icon>
+
+    </button>
+
+    <span class="title">
+
+        Expense Management
+
+    </span>
+
+    <span class="spacer"></span>
+
+    <button
+        mat-raised-button
+        color="primary"
+        routerLink="/dashboard">
+
+        <mat-icon>
+
+            dashboard
+
+        </mat-icon>
+
+        Back to Dashboard
+
+    </button>
+
+</mat-toolbar>
+
+<div class="container-fluid">
+
+    <div class="page-header">
+
+        <div>
+
+            <h2>
+
+                Expense Management
+
+            </h2>
+
+            <p>
+
+                Record and monitor department expenses.
+
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            (click)="showForm=!showForm">
+
+            <mat-icon>
+
+                add
+
+            </mat-icon>
+
+            Add Expense
+
+        </button>
+
+    </div>
+
+    <div
+        class="card form-card mb-4"
+        *ngIf="showForm">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+
+                Expense Details
+
+            </h4>
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Expense ID
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="expense.expenseId">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Budget ID
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="expense.budgetId">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Department ID
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="expense.departmentId">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Category
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="expense.category">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Amount
+
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="expense.amount">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Payment Mode
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        [(ngModel)]="expense.paymentMode">
+
+                        <option>Cash</option>
+                        <option>UPI</option>
+                        <option>Bank Transfer</option>
+                        <option>Cheque</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Expense Date
+
+                    </label>
+
+                    <input
+                        type="date"
+                        class="form-control"
+                        [(ngModel)]="expense.expenseDate">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Status
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        [(ngModel)]="expense.status">
+
+                        <option>Approved</option>
+                        <option>Pending</option>
+                        <option>Rejected</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-12">
+
+                    <label>
+
+                        Description
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="expense.description">
+
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+
+                <button
+                    class="btn btn-success"
+                    (click)="saveExpense()">
+
+                    Save Expense
+
+                </button>
+
+                <button
+                    class="btn btn-secondary ms-2"
+                    (click)="showForm=false">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Search Expense..."
+                [(ngModel)]="search"
+                (input)="filterExpenses()">
+
+        </div>
+
+        <div class="col-md-8 text-end">
+
+            <span class="badge bg-primary p-2">
+
+                Total Expenses :
+                {{expenses.length}}
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-lg-4">
+
+            <div class="card summary-card bg-primary">
+
+                <div class="card-body text-center">
+
+                    <h6>
+
+                        Total Expenses
+
+                    </h6>
+
+                    <h2>
+
+                        {{expenses.length}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card summary-card bg-success">
+
+                <div class="card-body text-center">
+
+                    <h6>
+
+                        Approved
+
+                    </h6>
+
+                    <h2>
+
+                        {{approvedCount}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card summary-card bg-warning">
+
+                <div class="card-body text-center">
+
+                    <h6>
+
+                        Pending
+
+                    </h6>
+
+                    <h2>
+
+                        {{pendingCount}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card table-card">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+
+                Expense List
+
+            </h4>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Expense ID</th>
+
+                            <th>Budget</th>
+
+                            <th>Department</th>
+
+                            <th>Category</th>
+
+                            <th>Amount</th>
+
+                            <th>Payment</th>
+
+                            <th>Status</th>
+
+                            <th width="120">
+
+                                Action
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let e of filteredExpenses">
+
+                            <td>{{e.expenseId}}</td>
+
+                            <td>{{e.budgetId}}</td>
+
+                            <td>{{e.departmentId}}</td>
+
+                            <td>{{e.category}}</td>
+
+                            <td>
+
+                                ₹ {{e.amount}}
+
+                            </td>
+
+                            <td>
+
+                                {{e.paymentMode}}
+
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="badge bg-success"
+                                    *ngIf="e.status=='Approved'">
+
+                                    Approved
+
+                                </span>
+
+                                <span
+                                    class="badge bg-warning text-dark"
+                                    *ngIf="e.status=='Pending'">
+
+                                    Pending
+
+                                </span>
+
+                                <span
+                                    class="badge bg-danger"
+                                    *ngIf="e.status=='Rejected'">
+
+                                    Rejected
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn btn-outline-danger btn-sm"
+                                    (click)="deleteExpense(e.expenseId)">
+
+                                    Delete
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                                                <tr *ngIf="filteredExpenses.length==0">
+
+                            <td
+                                colspan="8"
+                                class="text-center p-5">
+
+                                <h5>
+
+                                    No Expenses Found
+
+                                </h5>
+
+                                <p class="text-muted">
+
+                                    Add an expense to start tracking spending.
+
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer class="page-footer">
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <small>
+
+                    © 2026 AI Budget Monitoring System
+
+                </small>
+
+            </div>
+
+            <div class="col-md-6 text-end">
+
+                <small>
+
+                    Expense Management Module
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</div>

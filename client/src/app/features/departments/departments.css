@@ -1,0 +1,596 @@
+/* ===================================
+   PAGE
+=================================== */
+
+html,
+body{
+
+    background:#eef3f8;
+
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+
+}
+
+/* ===================================
+   TOOLBAR
+=================================== */
+
+.topbar{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+
+}
+
+.title{
+
+    margin-left:15px;
+
+    font-size:22px;
+
+    font-weight:700;
+
+}
+
+.spacer{
+
+    flex:1;
+
+}
+
+/* ===================================
+   CONTAINER
+=================================== */
+
+.container-fluid{
+
+    padding:30px;
+
+}
+
+/* ===================================
+   HEADER
+=================================== */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.page-header h2{
+
+    margin:0;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:#1f2937;
+
+}
+
+.page-header p{
+
+    color:#64748b;
+
+    margin-top:5px;
+
+}
+
+/* ===================================
+   BUTTONS
+=================================== */
+
+.btn{
+
+    border-radius:10px;
+
+    padding:10px 20px;
+
+    font-weight:600;
+
+}
+
+.btn-primary{
+
+    background:#1976d2;
+
+    border:none;
+
+}
+
+.btn-success{
+
+    border:none;
+
+}
+
+.btn-secondary{
+
+    border:none;
+
+}
+
+/* ===================================
+   FORM CARD
+=================================== */
+
+.form-card{
+
+    border:none;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.form-card .card-body{
+
+    padding:30px;
+
+    background:white;
+
+}
+
+.form-card h4{
+
+    color:#1e293b;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+/* ===================================
+   LABELS
+=================================== */
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#334155;
+
+}
+
+/* ===================================
+   INPUTS
+=================================== */
+
+.form-control,
+.form-select{
+
+    height:48px;
+
+    border-radius:10px;
+
+    border:1px solid #dbe2ea;
+
+    transition:.25s;
+
+    box-shadow:none;
+
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:#1976d2;
+
+    box-shadow:0 0 0 .2rem rgba(25,118,210,.15);
+
+}
+
+.form-control::placeholder{
+
+    color:#94a3b8;
+
+}
+
+/* ===================================
+   SEARCH
+=================================== */
+
+input[type="text"]{
+
+    border-radius:12px;
+
+}
+
+.table-card{
+
+    border:none;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.table-card .card-body{
+
+    padding:25px;
+
+}
+
+/* ===================================
+   TABLE
+=================================== */
+
+.table{
+
+    margin:0;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+}
+
+.table thead{
+
+    background:#1976d2;
+
+}
+
+.table th{
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    text-align:center;
+
+    padding:15px;
+
+    border:none;
+
+}
+
+.table td{
+
+    text-align:center;
+
+    vertical-align:middle;
+
+    padding:15px;
+
+    color:#374151;
+
+}
+
+.table-hover tbody tr{
+
+    transition:.2s;
+
+}
+
+.table-hover tbody tr:hover{
+
+    background:#eef6ff;
+
+}
+
+/* ===================================
+   STATUS BADGES
+=================================== */
+
+.badge{
+
+    padding:8px 16px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.bg-success{
+
+    background:#22c55e !important;
+
+}
+
+.bg-danger{
+
+    background:#ef4444 !important;
+
+}
+
+.bg-primary{
+
+    background:#1976d2 !important;
+
+}
+
+/* ===================================
+   ACTION BUTTONS
+=================================== */
+
+.btn-outline-danger{
+
+    border-radius:10px;
+
+    padding:7px 16px;
+
+    transition:.25s;
+
+}
+
+.btn-outline-danger:hover{
+
+    transform:scale(1.05);
+
+}
+
+/* ===================================
+   SUMMARY CARDS
+=================================== */
+
+.summary-card{
+
+    border:none;
+
+    border-radius:18px;
+
+    color:white;
+
+    transition:.3s;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.12);
+
+}
+
+.summary-card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.summary-card .card-body{
+
+    padding:28px;
+
+}
+
+.summary-card h6{
+
+    font-size:16px;
+
+    opacity:.9;
+
+    margin-bottom:12px;
+
+}
+
+.summary-card h2{
+
+    font-size:36px;
+
+    font-weight:700;
+
+    margin:0;
+
+}
+
+/* ===================================
+   FOOTER
+=================================== */
+
+.page-footer{
+
+    margin-top:35px;
+
+    padding:20px 5px;
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+.page-footer hr{
+
+    margin-bottom:15px;
+
+}
+
+/* ===================================
+   ANIMATIONS
+=================================== */
+
+.card{
+
+    transition:.3s ease;
+
+}
+
+.card:hover{
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+}
+
+.form-control,
+.form-select{
+
+    transition:.25s;
+
+}
+
+.btn{
+
+    transition:.25s;
+
+}
+
+.btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media(max-width:992px){
+
+    .page-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+    .summary-card{
+
+        margin-bottom:20px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .container-fluid{
+
+        padding:18px;
+
+    }
+
+    .page-header h2{
+
+        font-size:26px;
+
+    }
+
+    .form-card .card-body{
+
+        padding:20px;
+
+    }
+
+    .table{
+
+        font-size:14px;
+
+    }
+
+    .summary-card h2{
+
+        font-size:28px;
+
+    }
+
+    .btn{
+
+        width:100%;
+
+        margin-bottom:10px;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .topbar{
+
+        height:auto;
+
+        padding:8px;
+
+    }
+
+    .title{
+
+        font-size:18px;
+
+    }
+
+    .page-header{
+
+        margin-bottom:18px;
+
+    }
+
+    .page-header p{
+
+        font-size:14px;
+
+    }
+
+    .table th,
+    .table td{
+
+        padding:10px;
+
+        font-size:13px;
+
+    }
+
+}
+
+/* ===================================
+   SCROLLBAR
+=================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#eef3f8;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#1976d2;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#1259a7;
+
+}

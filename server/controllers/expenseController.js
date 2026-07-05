@@ -9,6 +9,7 @@ const { monitorBudget } = require("../services/monitoringService");
 // =========================================
 
 exports.createExpense = async (req, res) => {
+
     try {
 
         const errors = validationResult(req);
@@ -29,9 +30,10 @@ exports.createExpense = async (req, res) => {
             paymentMode,
             expenseDate,
             description,
-            supportingDocument,
             status
         } = req.body;
+
+        const supportingDocument = req.file ? req.file.filename : "";
 
         // Check Budget
         const budget = await Budget.findOne({ budgetId });
@@ -53,7 +55,7 @@ exports.createExpense = async (req, res) => {
             });
         }
 
-        // Duplicate Expense Check
+        // Duplicate Expense
         const existingExpense = await Expense.findOne({ expenseId });
 
         if (existingExpense) {
@@ -90,22 +92,28 @@ exports.createExpense = async (req, res) => {
 
         });
 
-        // ===============================
         // Update Budget
-        // ===============================
 
-        budget.utilizedAmount += Number(amount);
+        if (status === "Approved") {
 
-        budget.remainingAmount =
-            budget.allocatedAmount - budget.utilizedAmount;
+            budget.utilizedAmount += Number(amount);
 
-        budget.utilizationPercentage =
-            (budget.utilizedAmount / budget.allocatedAmount) * 100;
+            budget.remainingAmount =
+                budget.allocatedAmount - budget.utilizedAmount;
 
-        await budget.save();
+            budget.utilizationPercentage =
+                Number(
+                    (
+                        (budget.utilizedAmount /
+                            budget.allocatedAmount) * 100
+                    ).toFixed(2)
+                );
+
+            await budget.save();
+
+        }
+
         await monitorBudget(budget, expense);
-
-        // ===============================
 
         res.status(201).json({
 
@@ -126,7 +134,7 @@ exports.createExpense = async (req, res) => {
                 remainingAmount: budget.remainingAmount,
 
                 utilizationPercentage:
-                    budget.utilizationPercentage.toFixed(2)
+                    budget.utilizationPercentage
 
             }
 
@@ -143,8 +151,8 @@ exports.createExpense = async (req, res) => {
         });
 
     }
-};
 
+};
 // =========================================
 // Get All Expenses
 // =========================================
@@ -271,7 +279,11 @@ exports.deleteExpense = async (req, res) => {
 
         if (budget) {
 
-            budget.utilizedAmount -= expense.amount;
+            if (expense.status === "Approved") {
+
+                budget.utilizedAmount -= expense.amount;
+
+            }
 
             budget.remainingAmount =
                 budget.allocatedAmount - budget.utilizedAmount;

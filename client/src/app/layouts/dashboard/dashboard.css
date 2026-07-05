@@ -1,0 +1,880 @@
+/* ======================================================
+   AI Budget Monitoring Dashboard
+====================================================== */
+
+html,
+body{
+
+    margin:0;
+
+    padding:0;
+
+    background:#f5f7fb;
+
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+
+    overflow-x:hidden;
+
+}
+
+/* ===============================
+   Toolbar
+================================ */
+
+.topbar{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    height:68px;
+
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+
+}
+
+.title{
+
+    margin-left:15px;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    letter-spacing:.4px;
+
+}
+
+.spacer{
+
+    flex:1;
+
+}
+
+/* ===============================
+   Layout
+================================ */
+
+.dashboard-container{
+
+    height:calc(100vh - 64px);
+
+}
+
+.container-fluid{
+
+    padding:35px;
+
+}
+
+/* ===============================
+   Sidebar
+================================ */
+
+mat-sidenav{
+
+    width:260px;
+
+    background:#fff;
+
+    border-right:1px solid #e5e7eb;
+
+}
+
+mat-nav-list{
+
+    padding-top:18px;
+
+}
+
+/* menu */
+
+.menu-item{
+
+    display:flex !important;
+
+    align-items:center !important;
+
+    justify-content:flex-start !important;
+
+    gap:14px;
+
+    height:58px;
+
+    margin:8px 12px;
+
+    padding:0 18px;
+
+    border-radius:12px;
+
+    transition:.25s;
+
+    text-decoration:none;
+
+    color:#444;
+
+    font-weight:500;
+
+    font-size:17px;
+
+}
+
+.mdc-list-item__primary-text{
+
+    display:flex !important;
+
+    align-items:center !important;
+
+    gap:14px;
+
+}
+
+.menu-item.active{
+
+    background:#1976d2;
+
+    color:white;
+
+}
+
+.menu-item:hover{
+
+    background:#1976d2;
+
+    color:white;
+
+    transform:translateX(6px);
+}
+
+.menu-item mat-icon{
+
+    width:26px;
+
+    height:26px;
+
+    min-width:26px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:24px;
+
+    margin:0;
+
+    flex-shrink:0;
+
+}
+
+.menu-item span{
+
+    display:flex;
+
+    align-items:center;
+
+    height:100%;
+
+}
+
+/* remove angular spacing */
+
+.mdc-list-item__content{
+
+    display:flex !important;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+/* ===============================
+   Welcome
+================================ */
+
+.welcome-area{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.welcome-area h2{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#1f2937;
+
+    margin:0;
+
+}
+
+.welcome-area p{
+
+    margin-top:8px;
+
+    color:#6b7280;
+
+    font-size:15px;
+
+}
+
+/* ===============================
+   Dashboard Cards
+================================ */
+
+.stat-card{
+
+    height:170px;
+
+    border:none;
+
+    border-radius:20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+}
+
+.row.g-4>.col-lg-3{
+
+    display:flex;
+
+}
+
+.row.g-4>.col-lg-3>.card{
+
+    flex:1;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-6px) scale(1.02);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.12);
+
+}
+
+.stat-card .card-body{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:0;
+
+    height:100%;
+
+}
+
+.row.g-4{
+
+    align-items:stretch;
+
+}
+
+.row.g-4>div{
+
+    display:flex;
+
+}
+
+.row.g-4>div>.card{
+
+    flex:1;
+
+}
+
+.stat-card h6{
+
+    font-size:16px;
+
+    font-weight:500;
+
+    opacity:.9;
+
+    margin-bottom:18px;
+
+}
+
+.stat-card h2{
+
+    font-size:34px;
+
+    font-weight:700;
+
+}
+
+/* gradients */
+
+.budget{
+
+    background:linear-gradient(135deg,#0ea5e9,#2563eb);
+
+}
+
+.utilized{
+
+    background:linear-gradient(135deg,#10b981,#22c55e);
+
+}
+
+.department{
+
+    background:linear-gradient(135deg,#f59e0b,#fb923c);
+
+}
+
+.alert{
+
+    background:linear-gradient(135deg,#7c3aed,#ec4899);
+
+}
+
+/* ===============================
+   Normal Cards
+================================ */
+
+.dashboard-card{
+
+    border:none;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    transition:.25s;
+
+}
+
+.dashboard-card:hover{
+
+    box-shadow:0 15px 30px rgba(0,0,0,.12);
+
+}
+
+.dashboard-card .card-body{
+
+    padding:25px;
+
+    background:white;
+
+}
+
+.dashboard-card h4{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+    color:#1f2937;
+
+}
+
+/* ===============================
+   Charts
+================================ */
+
+.chart-wrapper{
+
+    width:100%;
+
+    height:390px;
+
+    padding:10px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.pie-wrapper{
+
+    height:360px;
+
+}
+
+#budgetChart{
+
+    width:100% !important;
+
+    height:320px !important;
+
+}
+
+#departmentChart{
+
+    width:300px !important;
+
+    height:300px !important;
+
+    max-width:300px !important;
+
+    max-height:300px !important;
+
+}
+
+/* ===============================
+   Tables
+================================ */
+
+.table{
+
+    margin-top:15px;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+}
+
+.table thead{
+
+    background:#1565c0;
+
+}
+
+.table th{
+
+    color:white;
+
+    text-align:center;
+
+    font-weight:600;
+
+    border:none;
+
+    padding:14px;
+
+}
+
+.table td{
+
+    text-align:center;
+
+    vertical-align:middle;
+
+    padding:14px;
+
+}
+
+.table-hover tbody tr:hover{
+
+    background:#eef6ff;
+
+}
+
+/* ===============================
+   Badges
+================================ */
+
+.badge{
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.bg-danger{
+
+    background:#dc3545 !important;
+
+}
+
+.bg-warning{
+
+    background:#ffc107 !important;
+
+}
+
+.bg-primary{
+
+    background:#0d6efd !important;
+
+}
+
+.bg-success{
+
+    background:#198754 !important;
+
+}
+
+/* ===============================
+   Scrollbar
+================================ */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#1976d2;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#eef3f8;
+
+}
+
+/* ==========================================
+   AI INSIGHTS
+========================================== */
+
+.ai-card{
+
+    margin-top:30px;
+
+    border:none;
+
+    border-radius:22px;
+
+    background:white;
+
+    color:#222;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.ai-card .card-body{
+
+    padding:35px;
+
+}
+
+.ai-icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.12);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-right:18px;
+
+}
+
+.ai-icon mat-icon{
+
+    font-size:36px;
+
+    width:36px;
+
+    height:36px;
+
+    color:#38bdf8;
+
+}
+
+.ai-title{
+
+    font-size:32px;
+
+    font-weight:800;
+
+    margin:0;
+
+    color:#1f2937;
+
+}
+
+.ai-subtitle{
+
+    margin-top:4px;
+
+    color:#64748b;
+
+    font-size:15px;
+
+}
+
+.ai-card hr{
+
+    border-color:#e5e7eb;
+
+    margin:25px 0;
+
+}
+
+.insight-box{
+
+    background:#f8fafc;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    text-align:center;
+
+    transition:.3s;
+
+    height:100%;
+
+}
+
+.insight-box:hover{
+
+    transform:translateY(-5px);
+
+    background:#eef6ff;
+
+}
+
+.insight-box h6{
+
+    color:#64748b;
+
+    font-size:16px;
+
+    margin-bottom:12px;
+
+}
+
+.insight-box h1{
+
+    color:#111827;
+
+    font-size:38px;
+
+    font-weight:700;
+
+    margin:0;
+
+}
+
+.recommendation-card{
+
+    margin-top:20px;
+
+    background:#f8fafc;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    height:100%;
+
+}
+
+.recommendation-card h5{
+
+    color:#38bdf8;
+
+    font-weight:700;
+
+    margin-bottom:12px;
+
+}
+
+.recommendation-card p{
+
+    color:#475569;
+
+    margin:0;
+
+    line-height:1.7;
+
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.dashboard-footer{
+
+    margin-top:35px;
+
+    padding:25px 5px;
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+.dashboard-footer hr{
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+button[mat-raised-button]{
+
+    border-radius:10px;
+
+}
+
+button[mat-button]{
+
+    border-radius:10px;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:1200px){
+
+    .stat-card{
+
+        height:160px;
+        border-radius: 22px;
+
+    }
+
+}
+
+@media(max-width:992px){
+
+    .dashboard-container{
+
+        height:auto;
+
+    }
+
+    .chart-wrapper{
+
+        height:320px;
+
+    }
+
+    #departmentChart{
+
+        width:260px !important;
+
+        height:260px !important;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .welcome-area{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .welcome-area h2{
+
+        font-size:26px;
+
+    }
+
+    .stat-card{
+
+        margin-bottom:18px;
+
+        height:150px;
+
+    }
+
+    .ai-title{
+
+        font-size:24px;
+
+    }
+
+    .insight-box{
+
+        margin-bottom:18px;
+
+    }
+
+    .recommendation-card{
+
+        margin-bottom:18px;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .container-fluid{
+
+        padding:15px;
+
+    }
+
+    .title{
+
+        font-size:18px;
+
+    }
+
+    #departmentChart{
+
+        width:220px !important;
+
+        height:220px !important;
+
+    }
+
+}
+
+.card{
+
+    transition:
+
+        transform .28s ease,
+
+        box-shadow .28s ease;
+
+}

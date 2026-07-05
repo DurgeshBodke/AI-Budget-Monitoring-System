@@ -1,5 +1,5 @@
 const express = require("express");
-
+const upload = require("../middleware/uploadMiddleware");
 const router = express.Router();
 
 const {
@@ -13,7 +13,12 @@ const {
     expenseValidation
 } = require("../validators/expenseValidator");
 
-router.post("/", expenseValidation, createExpense);
+router.post(
+    "/",
+    upload.single("document"),
+    expenseValidation,
+    createExpense
+);
 
 router.get("/", getAllExpenses);
 

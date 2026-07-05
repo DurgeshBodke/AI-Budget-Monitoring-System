@@ -1,0 +1,435 @@
+<mat-toolbar color="primary" class="topbar">
+
+    <button
+        mat-icon-button
+        routerLink="/dashboard">
+
+        <mat-icon>
+
+            arrow_back
+
+        </mat-icon>
+
+    </button>
+
+    <span class="title">
+
+        Department Management
+
+    </span>
+
+    <span class="spacer"></span>
+
+    <button
+        mat-raised-button
+        color="primary"
+        routerLink="/dashboard">
+
+        <mat-icon>
+
+            dashboard
+
+        </mat-icon>
+
+        Back to Dashboard
+
+    </button>
+
+</mat-toolbar>
+
+<div class="container-fluid">
+
+    <div class="page-header">
+
+        <div>
+
+            <h2>
+
+                Departments
+
+            </h2>
+
+            <p>
+
+                Create and manage all organization departments.
+
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            (click)="showForm=!showForm">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Add Department
+
+        </button>
+
+    </div>
+
+    <div
+        class="card form-card mb-4"
+        *ngIf="showForm">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+
+                Department Details
+
+            </h4>
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Department ID
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="department.departmentId">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Department Name
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="department.departmentName">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Department Code
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="department.departmentCode">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Department Head
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="department.departmentHead">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Status
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        [(ngModel)]="department.status">
+
+                        <option value="Active">
+
+                            Active
+
+                        </option>
+
+                        <option value="Inactive">
+
+                            Inactive
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+
+                <button
+                    class="btn btn-success"
+                    (click)="saveDepartment()">
+
+                    Save Department
+
+                </button>
+
+                <button
+                    class="btn btn-secondary ms-2"
+                    (click)="showForm=false">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Search Department..."
+                [(ngModel)]="search"
+                (input)="filterDepartments()">
+
+        </div>
+
+        <div class="col-md-8 text-end">
+
+            <span class="badge bg-primary p-2">
+
+                Total Departments :
+                {{departments.length}}
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="card table-card">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+
+                Department List
+
+            </h4>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Name</th>
+
+                            <th>Code</th>
+
+                            <th>Department Head</th>
+
+                            <th>Status</th>
+
+                            <th width="120">
+
+                                Action
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let d of filteredDepartments">
+
+                            <td>
+
+                                {{d.departmentId}}
+
+                            </td>
+
+                            <td>
+
+                                {{d.departmentName}}
+
+                            </td>
+
+                            <td>
+
+                                {{d.departmentCode}}
+
+                            </td>
+
+                            <td>
+
+                                {{d.departmentHead}}
+
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="badge bg-success"
+                                    *ngIf="d.status=='Active'">
+
+                                    Active
+
+                                </span>
+
+                                <span
+                                    class="badge bg-danger"
+                                    *ngIf="d.status=='Inactive'">
+
+                                    Inactive
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn btn-outline-danger btn-sm"
+                                    (click)="deleteDepartment(d.departmentId)">
+
+                                    Delete
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        <tr *ngIf="departments.length==0">
+
+                            <td
+                                colspan="6"
+                                class="text-center p-5">
+
+                                <h5>
+
+                                    No Departments Found
+
+                                </h5>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+        <div class="row mt-4">
+
+        <div class="col-lg-4">
+
+            <div class="card summary-card bg-primary">
+
+                <div class="card-body text-center">
+
+                    <h6>
+
+                        Total Departments
+
+                    </h6>
+
+                    <h2>
+
+                        {{departments.length}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card summary-card bg-success">
+
+                <div class="card-body text-center">
+
+                    <h6>
+
+                        Active Departments
+
+                    </h6>
+
+                    <h2>
+
+                        {{activeDepartments}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card summary-card bg-danger">
+
+                <div class="card-body text-center">
+
+                    <h6>
+
+                        Inactive Departments
+
+                    </h6>
+
+                    <h2>
+
+                        {{inactiveDepartments}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer class="page-footer">
+
+        <hr>
+
+        <small>
+
+            AI Budget Monitoring System • Department Module
+
+        </small>
+
+    </footer>
+
+</div>

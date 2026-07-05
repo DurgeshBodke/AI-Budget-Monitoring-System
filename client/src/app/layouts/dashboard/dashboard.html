@@ -1,0 +1,759 @@
+<mat-toolbar color="primary" class="topbar">
+
+    <button
+        mat-icon-button
+        (click)="drawer.toggle()">
+
+        <mat-icon>
+
+            menu
+
+        </mat-icon>
+
+    </button>
+
+    <span class="title">
+
+        AI Budget Monitoring System
+
+    </span>
+
+    <span class="spacer"></span>
+
+    <button
+        mat-button
+        disabled>
+
+        <mat-icon>
+
+            account_circle
+
+        </mat-icon>
+
+        {{user.name}}
+
+    </button>
+
+    <button
+        mat-raised-button
+        color="warn"
+        (click)="logout()">
+
+        <mat-icon>
+
+            logout
+
+        </mat-icon>
+
+        Logout
+
+    </button>
+
+</mat-toolbar>
+
+<mat-sidenav-container class="dashboard-container">
+
+    <mat-sidenav
+        #drawer
+        mode="side"
+        opened>
+
+        <mat-nav-list>
+
+            <!-- Dashboard intentionally removed -->
+
+            <a
+                mat-list-item
+                routerLink="/departments"
+                class="menu-item">
+
+                <mat-icon>
+
+                    apartment
+
+                </mat-icon>
+
+                <span>
+
+                    Departments
+
+                </span>
+
+            </a>
+
+            <a
+                mat-list-item
+                routerLink="/budgets"
+                class="menu-item">
+
+                <mat-icon>
+
+                    account_balance_wallet
+
+                </mat-icon>
+
+                <span>
+
+                    Budgets
+
+                </span>
+
+            </a>
+
+            <a
+                mat-list-item
+                routerLink="/expenses"
+                class="menu-item">
+
+                <mat-icon>
+
+                    payments
+
+                </mat-icon>
+
+                <span>
+
+                    Expenses
+
+                </span>
+
+            </a>
+
+            <a
+                mat-list-item
+                routerLink="/alerts"
+                class="menu-item">
+
+                <mat-icon>
+
+                    warning
+
+                </mat-icon>
+
+                <span>
+
+                    Alerts
+
+                </span>
+
+            </a>
+
+            <a
+                mat-list-item
+                routerLink="/reports"
+                class="menu-item">
+
+                <mat-icon>
+
+                    analytics
+
+                </mat-icon>
+
+                <span>
+
+                    Reports
+
+                </span>
+
+            </a>
+
+            <a
+                mat-list-item
+                routerLink="/users"
+                class="menu-item">
+
+                <mat-icon>
+
+                    groups
+
+                </mat-icon>
+
+                <span>
+
+                    Users
+
+                </span>
+
+            </a>
+
+        </mat-nav-list>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+
+        <div class="container-fluid">
+
+            <div class="welcome-area">
+
+                <div>
+
+                    <h2>
+
+                        Welcome,
+
+                        {{user.name}}
+
+                        👋
+
+                    </h2>
+
+                    <p>
+
+                        AI Budget Monitoring Dashboard
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card stat-card budget">
+
+                        <div class="card-body">
+
+                            <h6>
+
+                                Total Budget
+
+                            </h6>
+
+                            <h2>
+
+                                ₹ {{dashboard.totalAllocated/10000000 | number:'1.2-2'}} Cr
+
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card stat-card utilized">
+
+                        <div class="card-body">
+
+                            <h6>
+
+                                Total Utilized
+
+                            </h6>
+
+                            <h2>
+
+                                ₹ {{dashboard.totalUtilized/10000000 | number:'1.2-2'}} Cr
+
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card stat-card department">
+
+                        <div class="card-body">
+
+                            <h6>
+
+                                Departments
+
+                            </h6>
+
+                            <h2>
+
+                                {{dashboard.totalDepartments}}
+
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card stat-card alert">
+
+                        <div class="card-body">
+
+                            <h6>
+
+                                Alerts
+
+                            </h6>
+
+                            <h2>
+
+                                {{dashboard.totalAlerts}}
+
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-lg-6">
+
+                    <div class="card shadow dashboard-card">
+
+                        <div class="card-body">
+
+                            <h4>
+
+                                Budget Analysis
+
+                            </h4>
+
+                            <div class="chart-wrapper">
+
+                                <canvas id="budgetChart"></canvas>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                                <div class="col-lg-6">
+
+                    <div class="card shadow dashboard-card">
+
+                        <div class="card-body">
+
+                            <h4>
+
+                                System Summary
+
+                            </h4>
+
+                            <div class="chart-wrapper pie-wrapper">
+
+                                <canvas id="departmentChart"></canvas>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-lg-6">
+
+                    <div class="card shadow dashboard-card">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <h4>
+
+                                    Recent Expenses
+
+                                </h4>
+
+                                <span class="badge bg-primary">
+
+                                    {{recentExpenses.length}}
+
+                                </span>
+
+                            </div>
+
+                            <table class="table table-hover mt-3">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>ID</th>
+
+                                        <th>Category</th>
+
+                                        <th>Amount</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr *ngFor="let e of recentExpenses">
+
+                                        <td>
+
+                                            {{e.expenseId}}
+
+                                        </td>
+
+                                        <td>
+
+                                            {{e.category}}
+
+                                        </td>
+
+                                        <td>
+
+                                            ₹ {{e.amount}}
+
+                                        </td>
+
+                                    </tr>
+
+                                    <tr *ngIf="recentExpenses.length==0">
+
+                                        <td
+                                            colspan="3"
+                                            class="text-center">
+
+                                            No Expenses Available
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div class="card shadow dashboard-card">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <h4>
+
+                                    Recent Alerts
+
+                                </h4>
+
+                                <span class="badge bg-danger">
+
+                                    {{recentAlerts.length}}
+
+                                </span>
+
+                            </div>
+
+                            <table class="table table-hover mt-3">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>ID</th>
+
+                                        <th>Alert</th>
+
+                                        <th>Severity</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr *ngFor="let a of recentAlerts">
+
+                                        <td>
+
+                                            {{a.alertId}}
+
+                                        </td>
+
+                                        <td>
+
+                                            {{a.alertType}}
+
+                                        </td>
+
+                                        <td>
+
+                                            <span
+                                                class="badge bg-danger"
+                                                *ngIf="a.severity=='Critical'">
+
+                                                Critical
+
+                                            </span>
+
+                                            <span
+                                                class="badge bg-warning text-dark"
+                                                *ngIf="a.severity=='High'">
+
+                                                High
+
+                                            </span>
+
+                                            <span
+                                                class="badge bg-primary"
+                                                *ngIf="a.severity=='Medium'">
+
+                                                Medium
+
+                                            </span>
+
+                                            <span
+                                                class="badge bg-success"
+                                                *ngIf="a.severity=='Low'">
+
+                                                Low
+
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+                                    <tr *ngIf="recentAlerts.length==0">
+
+                                        <td
+                                            colspan="3"
+                                            class="text-center">
+
+                                            No Alerts Available
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+                        <div class="row mt-4">
+
+                <div class="col-12">
+
+                    <div class="card shadow ai-card">
+
+                        <div class="card-body">
+
+                            <div class="d-flex align-items-center justify-content-between">
+
+                                <div class="d-flex align-items-center">
+
+                                    <div class="ai-icon">
+
+                                        <mat-icon>
+
+                                            smart_toy
+
+                                        </mat-icon>
+
+                                    </div>
+
+                                    <div class="ms-3">
+
+                                        <h3 class="ai-title">
+
+                                            AI Insights
+
+                                        </h3>
+
+                                        <p class="ai-subtitle">
+
+                                            Real-time Budget Intelligence
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+                            <div class="row mt-4">
+
+                                <div class="col-md-4">
+
+                                    <div class="insight-box">
+
+                                        <h6>
+
+                                            Budget Utilization
+
+                                        </h6>
+
+                                        <h1>
+
+                                            {{ (dashboard.totalUtilized/dashboard.totalAllocated)*100 | number:'1.0-2' }}%
+
+                                        </h1>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    <div class="insight-box">
+
+                                        <h6>
+
+                                            Remaining Budget
+
+                                        </h6>
+
+                                        <h1>
+
+                                            ₹ {{dashboard.totalRemaining/10000000 | number:'1.2-2'}} Cr
+
+                                        </h1>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    <div class="insight-box">
+
+                                        <h6>
+
+                                            System Health
+
+                                        </h6>
+
+                                        <h1 class="text-success">
+
+                                            Good
+
+                                        </h1>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row mt-4">
+
+                                <div class="col-md-6">
+
+                                    <div class="recommendation-card">
+
+                                        <h5>
+
+                                            Recommendation
+
+                                        </h5>
+
+                                        <p>
+
+                                            Continue monitoring expenses regularly to prevent budget exhaustion.
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="recommendation-card">
+
+                                        <h5>
+
+                                            Prediction
+
+                                        </h5>
+
+                                        <p>
+
+                                            Current expenditure trend indicates stable utilization across departments.
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+                        <footer class="dashboard-footer">
+
+                <hr>
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-6">
+
+                        <small>
+
+                            © 2026 AI Budget Monitoring System
+
+                        </small>
+
+                    </div>
+
+                    <div class="col-md-6 text-end">
+
+                        <small>
+
+                            Developed using Angular • Node.js • MongoDB
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </footer>
+
+        </div>
+
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -1,0 +1,577 @@
+<mat-toolbar color="primary" class="topbar">
+
+    <button
+        mat-icon-button
+        routerLink="/dashboard">
+
+        <mat-icon>
+
+            arrow_back
+
+        </mat-icon>
+
+    </button>
+
+    <span class="title">
+
+        Budget Management
+
+    </span>
+
+    <span class="spacer"></span>
+
+    <button
+        mat-raised-button
+        color="primary"
+        routerLink="/dashboard">
+
+        <mat-icon>
+
+            dashboard
+
+        </mat-icon>
+
+        Back to Dashboard
+
+    </button>
+
+</mat-toolbar>
+
+<div class="container-fluid">
+
+    <div class="page-header">
+
+        <div>
+
+            <h2>
+
+                Budget Management
+
+            </h2>
+
+            <p>
+
+                Allocate and monitor departmental budgets.
+
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            (click)="showForm=!showForm">
+
+            <mat-icon>
+
+                add
+
+            </mat-icon>
+
+            Add Budget
+
+        </button>
+
+    </div>
+
+    <div
+        class="card form-card mb-4"
+        *ngIf="showForm">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+
+                Budget Details
+
+            </h4>
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Budget ID
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="budget.budgetId">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Financial Year
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="budget.financialYear">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Allocation Type
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        [(ngModel)]="budget.allocationType">
+
+                        <option value="Annual">
+
+                            Annual
+
+                        </option>
+
+                        <option value="Quarterly">
+
+                            Quarterly
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>
+
+                        Quarter
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        [(ngModel)]="budget.quarter">
+
+                        <option value="">
+
+                            None
+
+                        </option>
+
+                        <option value="Q1">Q1</option>
+                        <option value="Q2">Q2</option>
+                        <option value="Q3">Q3</option>
+                        <option value="Q4">Q4</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <label>
+
+                        Department ID
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="budget.departmentId">
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <label>
+
+                        Allocated Amount
+
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="budget.allocatedAmount">
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <label>
+
+                        Allocation Date
+
+                    </label>
+
+                    <input
+                        type="date"
+                        class="form-control"
+                        [(ngModel)]="budget.allocationDate">
+
+                </div>
+
+                <div class="col-12">
+
+                    <label>
+
+                        Remarks
+
+                    </label>
+
+                    <input
+                        class="form-control"
+                        [(ngModel)]="budget.remarks">
+
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+
+                <button
+                    class="btn btn-success"
+                    (click)="saveBudget()">
+
+                    Save Budget
+
+                </button>
+
+                <button
+                    class="btn btn-secondary ms-2"
+                    (click)="showForm=false">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Search Budget..."
+                [(ngModel)]="search"
+                (input)="filterBudgets()">
+
+        </div>
+
+        <div class="col-md-8 text-end">
+
+            <span class="badge bg-primary p-2">
+
+                Total Budgets :
+                {{budgets.length}}
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-lg-3">
+
+            <div class="card summary-card bg-primary">
+
+                <div class="card-body text-center">
+
+                    <h6>
+
+                        Total Budgets
+
+                    </h6>
+
+                    <h2>
+
+                        {{budgets.length}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            <div class="card summary-card bg-success">
+
+                <div class="card-body text-center">
+
+                    <h6>
+
+                        Allocated
+
+                    </h6>
+
+                    <h2>
+
+                        ₹ {{totalAllocated}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            <div class="card summary-card bg-warning">
+
+                <div class="card-body text-center">
+
+                    <h6>
+
+                        Utilized
+
+                    </h6>
+
+                    <h2>
+
+                        ₹ {{totalUtilized}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            <div class="card summary-card bg-danger">
+
+                <div class="card-body text-center">
+
+                    <h6>
+
+                        Remaining
+
+                    </h6>
+
+                    <h2>
+
+                        ₹ {{totalRemaining}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card table-card">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+
+                Budget List
+
+            </h4>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Budget ID</th>
+
+                            <th>Year</th>
+
+                            <th>Department</th>
+
+                            <th>Allocated</th>
+
+                            <th>Utilized</th>
+
+                            <th>Remaining</th>
+
+                            <th>Status</th>
+
+                            <th width="120">
+
+                                Action
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let b of filteredBudgets">
+
+                            <td>
+
+                                {{b.budgetId}}
+
+                            </td>
+
+                            <td>
+
+                                {{b.financialYear}}
+
+                            </td>
+
+                            <td>
+
+                                {{b.departmentId}}
+
+                            </td>
+
+                            <td>
+
+                                ₹ {{b.allocatedAmount}}
+
+                            </td>
+
+                            <td>
+
+                                ₹ {{b.utilizedAmount}}
+
+                            </td>
+
+                            <td>
+
+                                ₹ {{b.remainingAmount}}
+
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="badge bg-success"
+                                    *ngIf="b.status=='Active'">
+
+                                    Active
+
+                                </span>
+
+                                <span
+                                    class="badge bg-warning text-dark"
+                                    *ngIf="b.status=='Pending'">
+
+                                    Pending
+
+                                </span>
+
+                                <span
+                                    class="badge bg-danger"
+                                    *ngIf="b.status=='Closed'">
+
+                                    Closed
+
+                                </span>
+
+                                <span
+                                    class="badge bg-primary"
+                                    *ngIf="!b.status">
+
+                                    Available
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn btn-outline-danger btn-sm"
+                                    (click)="deleteBudget(b._id)">
+
+                                    Delete
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                                                <tr *ngIf="filteredBudgets.length==0">
+
+                            <td
+                                colspan="8"
+                                class="text-center p-5">
+
+                                <h5>
+
+                                    No Budgets Found
+
+                                </h5>
+
+                                <p class="text-muted">
+
+                                    Create a budget to get started.
+
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer class="page-footer">
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <small>
+
+                    © 2026 AI Budget Monitoring System
+
+                </small>
+
+            </div>
+
+            <div class="col-md-6 text-end">
+
+                <small>
+
+                    Budget Management Module
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</div>

@@ -45,15 +45,11 @@ const alertSchema = new mongoose.Schema(
         required:true
     },
 
-    status:{
+   status:{
         type:String,
-        enum:[
-            "Open",
-            "Resolved"
-        ],
+        enum:["Open","Resolved"],
         default:"Open"
-    }
-
+    },
 },
 {
     timestamps:true

@@ -5,6 +5,9 @@ const connectDB = require("../config/db");
 
 const importDepartments = require("./departments");
 const importBudgets = require("./budgets");
+const importUsers = require("./users");
+const importExpenses = require("./expenses");
+const importAlerts = require("./alerts");
 
 const startImport = async () => {
 
@@ -13,28 +16,34 @@ const startImport = async () => {
         await connectDB();
 
         console.log("Connected to MongoDB");
-        console.log("---------------------------");
+
+        console.log("----------------");
 
         await importDepartments();
 
-        console.log("---------------------------");
-
         await importBudgets();
 
-        console.log("---------------------------");
+        await importUsers();
 
-        console.log("Data Import Completed");
+        await importExpenses();
+
+        await importAlerts();
+
+        console.log("----------------");
+
+        console.log("Import Completed");
 
         process.exit();
 
-    } catch (error) {
+    }
+    catch(err){
 
-        console.error(error);
+        console.log(err);
 
         process.exit(1);
 
     }
 
-};
+}
 
 startImport();

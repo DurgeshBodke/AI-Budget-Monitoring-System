@@ -1,0 +1,137 @@
+<div class="login-page">
+
+    <!-- LEFT -->
+
+    <div class="left-panel">
+
+        <div class="logo">
+
+            <i class="bi bi-bank2"></i>
+
+            <div>
+                <h2>AI Budget Monitoring System</h2>
+                <p>Government Financial Intelligence Platform</p>
+            </div>
+
+        </div>
+
+        <div class="hero">
+
+            <h1>
+                Smart Budgeting.
+                <br>
+                <span>Stronger Governance.</span>
+            </h1>
+
+            <p>
+                AI-powered insights and real-time monitoring
+                for efficient budget management.
+            </p>
+
+            <div class="feature">
+
+                <i class="bi bi-bar-chart-fill"></i>
+
+                <div>
+
+                    <h4>AI Powered Insights</h4>
+
+                    <p>Intelligent analysis & predictions</p>
+
+                </div>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="bi bi-shield-lock-fill"></i>
+
+                <div>
+
+                    <h4>Secure & Reliable</h4>
+
+                    <p>Enterprise grade security</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT -->
+
+    <div class="right-panel">
+
+        <div class="login-card">
+
+            <div class="lock">
+
+                <i class="bi bi-lock"></i>
+
+            </div>
+
+            <h2>Welcome Back</h2>
+
+            <p class="sub">
+                Sign in to continue
+            </p>
+
+            <label>Email</label>
+
+            <div class="input-box">
+
+                <i class="bi bi-envelope"></i>
+
+                <input
+                    [(ngModel)]="email"
+                    type="email"
+                    placeholder="Enter your email">
+
+            </div>
+
+
+            <label>Password</label>
+
+            <div class="input-box">
+
+                <i class="bi bi-lock"></i>
+
+                <input
+                    [(ngModel)]="password"
+                    type="password"
+                    placeholder="Enter your password">
+
+            </div>
+
+
+            <div class="remember">
+
+                <label>
+
+                    <input type="checkbox">
+
+                    Remember me
+
+                </label>
+
+            </div>
+
+
+            <button
+                class="login-btn"
+                (click)="login()">
+
+                <i class="bi bi-box-arrow-in-right"></i>
+
+                Login
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

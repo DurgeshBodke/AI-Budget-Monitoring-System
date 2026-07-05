@@ -83,3 +83,136 @@ exports.createBudget = async (req, res) => {
     }
 
 };
+
+// Get All Budgets
+exports.getAllBudgets = async (req, res) => {
+    try {
+
+        const budgets = await Budget.find()
+            .populate("department", "departmentId departmentName");
+
+        res.status(200).json({
+            success: true,
+            count: budgets.length,
+            budgets
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
+// Get Budget By ID
+exports.getBudgetById = async (req, res) => {
+    try {
+
+        const budget = await Budget.findById(req.params.id)
+            .populate("department", "departmentId departmentName");
+
+        if (!budget) {
+            return res.status(404).json({
+                success: false,
+                message: "Budget not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            budget
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
+// Update Budget
+exports.updateBudget = async (req, res) => {
+
+    try {
+
+        const budget = await Budget.findById(req.params.id);
+
+        if (!budget) {
+            return res.status(404).json({
+                success: false,
+                message: "Budget not found"
+            });
+        }
+
+        Object.assign(budget, req.body);
+
+        budget.remainingAmount =
+            budget.allocatedAmount - budget.utilizedAmount;
+
+        budget.utilizationPercentage =
+            budget.allocatedAmount > 0
+                ? Number(
+                      (
+                          (budget.utilizedAmount /
+                              budget.allocatedAmount) *
+                          100
+                      ).toFixed(2)
+                  )
+                : 0;
+
+        await budget.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Budget Updated Successfully",
+            budget
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+};
+
+// Delete Budget
+exports.deleteBudget = async (req, res) => {
+
+    try {
+
+        const budget = await Budget.findById(req.params.id);
+
+        if (!budget) {
+            return res.status(404).json({
+                success: false,
+                message: "Budget not found"
+            });
+        }
+
+        await budget.deleteOne();
+
+        res.status(200).json({
+            success: true,
+            message: "Budget Deleted Successfully"
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+};
