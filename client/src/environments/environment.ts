@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://ai-budget-monitoring-system.onrender.com/'
+    apiUrl: 'https://ai-budget-monitoring-system.onrender.com'
 };
