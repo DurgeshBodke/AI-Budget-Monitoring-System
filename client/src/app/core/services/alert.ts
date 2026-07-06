@@ -8,7 +8,7 @@ export class AlertService {
 
   private http = inject(HttpClient);
 
-  private api = "http://localhost:5000/api/alerts";
+  private api = "https://ai-budget-monitoring-system.onrender.com/api/alerts";
 
   private headers() {
     return new HttpHeaders({

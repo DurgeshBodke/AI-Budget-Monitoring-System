@@ -8,7 +8,7 @@ export class DepartmentService {
 
   private http = inject(HttpClient);
 
-  private api = "http://localhost:5000/api/departments";
+  private api = "https://ai-budget-monitoring-system.onrender.com/api/departments";
 
   private getHeaders() {
     return new HttpHeaders({

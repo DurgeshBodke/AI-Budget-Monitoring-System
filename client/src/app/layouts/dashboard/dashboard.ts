@@ -90,7 +90,7 @@ export class Dashboard implements OnInit {
 
     this.http.get<any>(
 
-      "http://localhost:5000/api/dashboard",
+      "https://ai-budget-monitoring-system.onrender.com/api/dashboard",
 
       { headers }
 

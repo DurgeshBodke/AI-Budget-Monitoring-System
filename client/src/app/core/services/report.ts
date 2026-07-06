@@ -8,7 +8,7 @@ export class ReportService {
 
   private http = inject(HttpClient);
 
-  private api = "http://localhost:5000/api/reports";
+  private api = "https://ai-budget-monitoring-system.onrender.com/api/reports";
 
   private getHeaders() {
 

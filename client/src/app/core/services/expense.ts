@@ -8,7 +8,7 @@ export class ExpenseService {
 
   private http = inject(HttpClient);
 
-  private api = 'http://localhost:5000/api/expenses';
+  private api = 'https://ai-budget-monitoring-system.onrender.com/api/expenses';
 
   private getHeaders() {
     return new HttpHeaders({

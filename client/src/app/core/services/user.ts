@@ -8,7 +8,7 @@ export class UserService {
 
   private http = inject(HttpClient);
 
-  private api = "http://localhost:5000/api/users";
+  private api = "https://ai-budget-monitoring-system.onrender.com/api/users";
 
   private headers() {
     return new HttpHeaders({
