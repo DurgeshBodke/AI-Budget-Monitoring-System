@@ -44,8 +44,9 @@ export class Login {
       },
 
       error: (err) => {
-
-        alert(err.error.message);
+        console.log(err);
+        console.log(err.error);
+        alert(JSON.stringify(err.error.message));
 
       }
 
